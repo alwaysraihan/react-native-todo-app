@@ -8,9 +8,13 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="ToDo">
-                    {(props) => <ToDo {...props} />}
-                </Stack.Screen>
+                <Stack.Screen
+                    name="Home"
+                    options={{
+                        headerShown: false,
+                    }}
+                    component={ToDo}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
