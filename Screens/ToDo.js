@@ -6,12 +6,25 @@ import {
     ImageBackground,
     TextInput,
     TouchableOpacity,
+    FlatList,
+    ScrollView,
 } from "react-native";
 
 const Notes = () => {
+    const [allTask, setAllTask] = useState([
+        { id: "54564564", value: "Hello, Is everything okay?" },
+        { id: "5456456664", value: "Hello, Is everything okay?" },
+        { id: "5456466564", value: "Hello, Is everything okay?" },
+    ]);
     const [newTask, setNewTask] = useState("");
-    const addNewTask = (enteredTesxt) => {
-        setNewTask(enteredTesxt);
+    const addNewTaskToList = () => {
+        setAllTask([
+            ...allTask,
+            { id: Math.random().toString(), value: newTask },
+        ]);
+    };
+    const addNewTask = (enteredText) => {
+        setNewTask(enteredText);
     };
     return (
         <View style={styles.container}>
@@ -27,6 +40,7 @@ const Notes = () => {
                         style={styles.inputBox}
                         placeholder="Enter a new task"
                         onChange={addNewTask}
+                        value={newTask}
                     />
                 </View>
                 <View
@@ -39,12 +53,36 @@ const Notes = () => {
                         justifyContent: "space-between",
                     }}
                 >
-                    <TouchableOpacity style={styles.butonDesign}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setNewTask("");
+                        }}
+                        style={styles.butonDesign}
+                    >
                         <Text style={styles.buttonText}>Clear</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.butonDesign}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            addNewTaskToList();
+                        }}
+                        style={styles.butonDesign}
+                    >
                         <Text style={styles.buttonText}>Add</Text>
                     </TouchableOpacity>
+                </View>
+                <View>
+                    <FlatList
+                        keyExtractor={(item) => item.id}
+                        data={allTask}
+                        renderItem={(itemData) => {
+                            <ScrollView>
+                                <View>
+                                    <Text>{itemData.item.value}</Text>
+                                </View>
+                                ;
+                            </ScrollView>;
+                        }}
+                    />
                 </View>
             </ImageBackground>
         </View>
